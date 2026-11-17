@@ -1,0 +1,363 @@
+/* ==========================================================================
+   Eben Marks — homepage stylesheet
+   Look: late-90s software box and splash screen.
+   - Splash-screen window on a washed teal desk
+   - Heavy black grotesk wordmarks, tilted square icon tile
+   - Grainy, painted violet / ochre / orange segments
+   - Red box-front stickers for callouts
+   No external fonts or images: system font stacks + inline SVG grain only.
+   ========================================================================== */
+
+:root {
+  /* Palette */
+  --desk:      #7FB3B5;  /* splash-screen teal */
+  --wash:      #EAF2F1;  /* pale window wash */
+  --wash-deep: #D3E4E3;  /* faint background shapes */
+  --ink:       #000000;  /* wordmark black */
+  --body-ink:  #1E2A2E;
+  --muted:     #4F6468;
+  --red:       #D2232A;  /* box-front sticker red */
+  --ochre:     #E6A532;
+  --orange:    #C9552B;
+  --violet:    #4A3A8F;
+  --sky:       #5AA4C6;
+  --globe:     #3C9C8C;
+
+  /* Type */
+  --wordmark: "Arial Black", "Helvetica Neue", "Franklin Gothic Heavy", "Segoe UI Black", Arial, sans-serif;
+  --humanist: "Myriad Pro", Frutiger, "Segoe UI", Tahoma, "Trebuchet MS", system-ui, sans-serif;
+  --serif:    "Minion Pro", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+
+  /* Painted grain, generated inline */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .32 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--grain), var(--desk);
+  color: var(--body-ink);
+  font-family: var(--humanist);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+a { color: var(--red); text-underline-offset: 0.18em; text-decoration-thickness: 2px; }
+a:hover { color: var(--ink); }
+a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+/* --------------------------------------------------------------------------
+   The sheet: one big splash window on the desk
+   -------------------------------------------------------------------------- */
+.page {
+  max-width: 56rem;
+  margin: 2.5rem auto;
+  padding: 0 0 2.5rem;
+  background:
+    linear-gradient(115deg, transparent 0 62%, var(--wash-deep) 62% 74%, transparent 74%) no-repeat 0 0 / 100% 38rem,
+    linear-gradient(200deg, transparent 0 70%, rgba(255,255,255,.7) 70% 82%, transparent 82%) no-repeat 0 0 / 100% 38rem,
+    var(--wash);
+  border: 1px solid #3F6E70;
+  box-shadow: inset 0 0 0 4px var(--wash), inset 0 0 0 5px #9DBEBE, 6px 6px 0 rgba(0,0,0,.18);
+}
+
+.page > section,
+.page > footer,
+.lede-wrap { padding-left: clamp(1.25rem, 5vw, 3.5rem); padding-right: clamp(1.25rem, 5vw, 3.5rem); }
+
+/* --------------------------------------------------------------------------
+   Splash hero
+   -------------------------------------------------------------------------- */
+.splash {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem 2.75rem;
+  align-items: center;
+  padding: 3.5rem clamp(1.25rem, 5vw, 3.5rem) 1.5rem;
+}
+
+/* Tilted icon tile: painted quadrants, globe, glyph */
+.tile {
+  position: relative;
+  width: clamp(7rem, 18vw, 10.5rem);
+  aspect-ratio: 1;
+  border: 7px solid var(--ink);
+  transform: rotate(-11deg);
+  background:
+    var(--grain),
+    radial-gradient(circle at 50% 50%, var(--globe) 0 21%, #1F5E57 21.5% 23%, transparent 23.5%),
+    conic-gradient(from -45deg, var(--ochre) 0 25%, var(--orange) 0 50%, var(--violet) 0 75%, var(--sky) 0);
+  box-shadow: 5px 5px 0 rgba(0,0,0,.25);
+  animation: tile-in 900ms cubic-bezier(.2,.9,.25,1.2) both;
+}
+.tile span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 7vw, 4rem);
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 3px 3px 0 var(--ink);
+}
+@keyframes tile-in {
+  from { transform: rotate(-200deg) scale(.4); opacity: 0; }
+  to   { transform: rotate(-11deg) scale(1); opacity: 1; }
+}
+
+.splash-title { min-width: 0; }
+.maker {
+  margin: 0;
+  font-family: var(--wordmark);
+  font-weight: 900;
+  font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.splash h1 {
+  margin: -0.1em 0 0.15em;
+  font-family: var(--wordmark);
+  font-weight: 900;
+  font-size: clamp(3rem, 10vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  color: var(--ink);
+}
+.edition {
+  margin: 0;
+  text-align: right;
+  font-family: var(--humanist);
+  font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+  line-height: 1.15;
+  color: var(--ink);
+}
+.edition .version { display: block; font-weight: 600; }
+
+.licence {
+  grid-column: 1 / -1;
+  margin: 1rem 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid #9DBEBE;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Box-front tagline */
+.lede-wrap { margin: 1.5rem 0 0; }
+.lede {
+  margin: 0;
+  max-width: 36em;
+  font-family: var(--humanist);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.2rem, 2.4vw, 1.45rem);
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Sections
+   -------------------------------------------------------------------------- */
+section { margin-top: 4rem; }
+
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0 0 1.5rem;
+  font-family: var(--wordmark);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 3.6vw, 2.2rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+}
+/* mini tilted tile before each heading, colour per section */
+h2::before {
+  content: "";
+  flex: none;
+  width: 1.05em;
+  height: 1.05em;
+  border: 4px solid var(--ink);
+  transform: rotate(-11deg);
+  background: var(--grain), var(--tile, var(--ochre));
+}
+#about      { --tile: var(--ochre); }
+#experience { --tile: var(--violet); }
+#highlights { --tile: var(--red); }
+#background { --tile: var(--sky); }
+#contact    { --tile: var(--orange); }
+
+p { max-width: 38em; }
+
+/* --------------------------------------------------------------------------
+   Experience
+   -------------------------------------------------------------------------- */
+.ledger { list-style: none; margin: 0; padding: 0; }
+.entry {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: 0 2rem;
+  padding: 1.5rem 0;
+  border-top: 2px solid var(--ink);
+}
+.entry:last-child { border-bottom: 2px solid var(--ink); }
+
+.when {
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  padding-top: 0.25rem;
+}
+.current .when { color: var(--red); }
+.now-sticker {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.15rem 0.7rem;
+  background: var(--red);
+  color: #fff;
+  border-radius: 999px;
+  font-style: italic;
+  font-size: 0.85rem;
+  transform: rotate(-4deg);
+}
+
+.role {
+  margin: 0;
+  font-family: var(--wordmark);
+  font-weight: 900;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.org {
+  margin: 0.1rem 0 0.7rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+.entry ul { margin: 0; padding-left: 1.2rem; list-style: square; }
+.entry li { margin: 0.35rem 0; max-width: 36em; }
+.entry li::marker { color: var(--orange); }
+.entry.minor .role { font-size: 1.05rem; }
+
+/* --------------------------------------------------------------------------
+   Highlights: box-front stickers
+   -------------------------------------------------------------------------- */
+.highlights {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.75rem 2rem;
+}
+.highlights li {
+  padding: 1.1rem 1.4rem 1.2rem;
+  background: var(--red);
+  color: #fff;
+  border-radius: 1.1rem;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.2);
+}
+.highlights li:nth-child(odd)  { transform: rotate(-1.5deg); }
+.highlights li:nth-child(even) { transform: rotate(1.2deg); }
+.highlights li:nth-child(4) {
+  background: var(--grain), var(--ochre);
+  color: var(--ink);
+  border-radius: 0.25rem;
+}
+.highlights h3 {
+  margin: 0 0 0.35rem;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+.highlights p { margin: 0; font-style: italic; font-weight: 600; font-size: 1rem; }
+
+/* --------------------------------------------------------------------------
+   Skills and education
+   -------------------------------------------------------------------------- */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+.plain { list-style: none; padding: 0; margin: 0; }
+.plain li { margin: 0 0 0.75rem; padding-left: 1.4rem; position: relative; }
+.plain li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.6rem;
+  height: 0.6rem;
+  border: 2px solid var(--ink);
+  background: var(--sky);
+  transform: rotate(-11deg);
+}
+.plain small { display: block; color: var(--muted); font-family: var(--serif); font-style: italic; font-size: 0.95rem; }
+
+/* --------------------------------------------------------------------------
+   Contact: one big oval sticker
+   -------------------------------------------------------------------------- */
+.contact-sticker {
+  display: inline-block;
+  max-width: none;
+  margin: 0.5rem 0 0;
+  padding: 1.2rem 2.4rem;
+  background: var(--red);
+  color: #fff;
+  border-radius: 50%;
+  transform: rotate(-3deg);
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  line-height: 1.2;
+  text-align: center;
+  box-shadow: 4px 4px 0 rgba(0,0,0,.2);
+}
+.contact-sticker a { color: #fff; font-style: italic; }
+.contact-sticker a:hover { color: var(--ochre); }
+.contact-sticker a:focus-visible { outline-color: #fff; }
+
+/* --------------------------------------------------------------------------
+   Footer: splash-screen fine print
+   -------------------------------------------------------------------------- */
+footer {
+  margin-top: 4.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #9DBEBE;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+footer p { margin: 0; max-width: none; }
+
+/* --------------------------------------------------------------------------
+   Responsive, motion, print
+   -------------------------------------------------------------------------- */
+@media (max-width: 40rem) {
+  .page { margin: 0; border-left: 0; border-right: 0; }
+  .splash { grid-template-columns: 1fr; padding-top: 2.5rem; }
+  .tile { width: 6rem; border-width: 5px; }
+  .edition { text-align: left; }
+  .entry { grid-template-columns: 1fr; }
+  .when { padding: 0 0 0.3rem; }
+  .now-sticker { margin: 0 0 0 0.5rem; }
+  .two-col { grid-template-columns: 1fr; gap: 1rem; }
+  section { margin-top: 3.25rem; }
+  .contact-sticker { border-radius: 2rem; padding: 1rem 1.6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile { animation: none; }
+}
+
+@media print {
+  body { background: #fff; }
+  .page { box-shadow: none; border: 0; background: #fff; }
+  .tile { animation: none; }
+  .highlights li, .contact-sticker { box-shadow: none; }
+}
